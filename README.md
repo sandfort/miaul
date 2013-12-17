@@ -11,6 +11,13 @@ music representation languages.
 ### Languages planned for future support:
 * [EsAC](http://www.esac-data.org/)
 * [Clay](http://www.cs.oswego.edu/MxM/)
-* [JFugue](http://www.jfugue.org/)
 * [LilyPond](http://www.lilypond.org)
 * [MusicXML](http://www.musicxml.com/)
+* [abc notation](http://abcnotation.com/)
+
+### Languages being considered for future support:
+* [JFugue](http://www.jfugue.org/)
+* [Music Macro Language](http://en.wikipedia.org/wiki/Music_Macro_Language)
+* [Music Markup Language](http://www.musicmarkup.info/)
+* [NIFF](http://www.music-notation.info/en/formats/NIFF.html)
+* [GUIDO](http://guidolib.sourceforge.net/GUIDO/)
