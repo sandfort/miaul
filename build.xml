@@ -1,0 +1,43 @@
+<project name="Miaul" default="dist">
+    <property name="src" location="src/java"/>
+    <property name="build" location="build"/>
+    <property name="lib" location="lib"/>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <mkdir dir="${build}/classes"/>
+        <javac srcdir="${src}" destdir="${build}/classes">
+            <classpath>
+                <pathelement path="${lib}/xom-1.2.10.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile">
+        <mkdir dir="${build}/dist"/>
+        <jar jarfile="${build}/dist/Miaul-${DSTAMP}.jar"
+             basedir="${build}/classes">
+             <manifest>
+                 <attribute name="Main-Class" value="us.jsand.miaul.Miaul"/>
+             </manifest>
+        </jar>
+        <copy file="${lib}/xom-1.2.10.jar" todir="${build}/dist"/>
+    </target>
+
+    <target name="run" depends="dist">
+        <java classname="us.jsand.miaul.Miaul">
+            <classpath>
+                <pathelement path="${build}/dist/Miaul-${DSTAMP}.jar"/>
+                <pathelement path="${build}/dist/xom-1.2.10.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+</project>
