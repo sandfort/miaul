@@ -1,95 +1,79 @@
 package us.jsand.miaul;
 
-import nu.xom.*;
+import java.io.*;
+import java.lang.String;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
-import java.io.IOException;
+import com.audiveris.proxymusic.*;
+import com.audiveris.proxymusic.util.*;
+import com.audiveris.proxymusic.ScorePartwise.Part;
+import com.audiveris.proxymusic.ScorePartwise.Part.Measure;
 
 public class Miaul {
-    public static void main(String[] args) {
-        // Declare the score.
-        Element score = new Element("score-partwise");
-        score.addAttribute(new Attribute("version", "3.0"));
+    public static void main(String[] args) throws Exception {
+        ObjectFactory factory = new ObjectFactory();
 
-        // Declare the list of parts.
-        Element partList = new Element("part-list");
-        Element scorePart = new Element("score-part");
-        scorePart.addAttribute(new Attribute("id", "P1"));
-        Element partName = new Element("part-name");
-        partName.appendChild("Music");
-        scorePart.appendChild(partName);
-        partList.appendChild(scorePart);
+        // A score where measures are arranged in parts.
+        // Use ScoreTimewise for a score where parts are arranged in measures.
+        ScorePartwise score = factory.createScorePartwise();
 
-        // Declare the first part.
-        Element part = new Element("part");
-        part.addAttribute(new Attribute("id", "P1"));
+        // Establish a list of parts.
+        PartList parts = factory.createPartList();
+        ScorePart scorePart = factory.createScorePart();
+        scorePart.setId("P1");
+        PartName name = factory.createPartName();
+        name.setValue("Part 1");
+        scorePart.setPartName(name);
+        parts.getPartGroupOrScorePart().add(scorePart);
 
-        // Declare the first measure.
-        Element measure = new Element("measure");
-        measure.addAttribute(new Attribute("number", "1"));
+        // Now create the part that lives in the score.
+        Part part = factory.createScorePartwisePart();
+        part.setId("P1");
 
-        // Declare the attributes of the first measure.
-        Element attributes = new Element("attributes");
-        Element divisions = new Element("divisions");
-        divisions.appendChild("1");
-        Element key = new Element("key");
-        Element fifths = new Element("fifths");
-        fifths.appendChild("0");
-        key.appendChild(fifths);
-        Element time = new Element("time");
-        Element beats = new Element("beats");
-        beats.appendChild("4");
-        Element beatType = new Element("beat-type");
-        beatType.appendChild("4");
-        time.appendChild(beats);
-        time.appendChild(beatType);
-        Element clef = new Element("clef");
-        Element sign = new Element("sign");
-        sign.appendChild("G");
-        Element line = new Element("line");
-        line.appendChild("2");
-        clef.appendChild(sign);
-        clef.appendChild(line);
-        attributes.appendChild(divisions);
-        attributes.appendChild(key);
-        attributes.appendChild(time);
-        attributes.appendChild(clef);
+        // Create the measure that lives in the part.
+        Measure measure = factory.createScorePartwisePartMeasure();
+        measure.setNumber("1");
 
-        // Declare the notes in the first measure.
-        Element note = new Element("note");
-        Element pitch = new Element("pitch");
-        Element step = new Element("step");
-        step.appendChild("C");
-        Element octave = new Element("octave");
-        octave.appendChild("4");
-        pitch.appendChild(step);
-        pitch.appendChild(octave);
-        Element duration = new Element("duration");
-        duration.appendChild("4");
-        Element type = new Element("type");
-        type.appendChild("whole");
-        note.appendChild(pitch);
-        note.appendChild(duration);
-        note.appendChild(type);
-        measure.appendChild(attributes);
-        measure.appendChild(note);
-        part.appendChild(measure);
-        score.appendChild(partList);
-        score.appendChild(part);
+        // Set up the attributes of the measure.
+        Attributes attr = factory.createAttributes();
+        attr.setDivisions(new BigDecimal(1));
 
-        Document doc = new Document(score);
-        String dtd = "http://www.musicxml.org/dtds/partwise.dtd";
-        String publicId = "-//Recordare//DTD MusicXML 3.0 Partwise//EN";
-        DocType doctype = new DocType("score-partwise", publicId, dtd);
-        doc.insertChild(doctype, 0);
+        Key keyOfC = factory.createKey();
+        keyOfC.setFifths(new BigInteger("0"));
+        attr.getKey().add(keyOfC);
 
-        // serialize dat shit
-        try {
-            Serializer serializer = new Serializer(System.out, "UTF-8");
-            serializer.setIndent(2);
-            serializer.setMaxLength(64);
-            serializer.write(doc);
-        } catch (IOException ioe) {
-            System.err.println(ioe);
-        }
+        // This is really important
+        Time commonTime = factory.createTime();
+        // Particularly these two lines
+        commonTime.getTimeSignature().add(factory.createTimeBeats("4"));
+        commonTime.getTimeSignature().add(factory.createTimeBeatType("4"));
+        attr.getTime().add(commonTime);
+
+        Clef gClef = new Clef();
+        gClef.setSign(ClefSign.G);
+        gClef.setLine(new BigInteger("2"));
+
+        // Now make an actual note
+        Note note = factory.createNote();
+        measure.getNoteOrBackupOrForward().add(note);
+
+        // Set the pitch of the note
+        Pitch pitch = factory.createPitch();
+        note.setPitch(pitch);
+        pitch.setStep(Step.C);
+        pitch.setOctave(4);
+
+        // Set the duration of the note
+        note.setDuration(new BigDecimal(4));
+
+        // Set the type of the note
+        NoteType type = factory.createNoteType();
+        type.setValue("whole");
+        note.setType(type);
+
+        Marshalling.marshal(score, System.out);
     }
 }

@@ -12,7 +12,7 @@
         <mkdir dir="${build}/classes"/>
         <javac srcdir="${src}" destdir="${build}/classes">
             <classpath>
-                <pathelement path="${lib}/xom-1.2.10.jar"/>
+                <pathelement path="${lib}/proxymusic-3.0.jar"/>
             </classpath>
         </javac>
     </target>
@@ -25,14 +25,16 @@
                  <attribute name="Main-Class" value="us.jsand.miaul.Miaul"/>
              </manifest>
         </jar>
-        <copy file="${lib}/xom-1.2.10.jar" todir="${build}/dist"/>
+        <copy file="${lib}/proxymusic-3.0.jar" todir="${build}/dist"/>
+        <copy file="${lib}/jaxb-core.jar" todir="${build}/dist"/>
     </target>
 
     <target name="run" depends="dist">
         <java classname="us.jsand.miaul.Miaul">
             <classpath>
                 <pathelement path="${build}/dist/Miaul-${DSTAMP}.jar"/>
-                <pathelement path="${build}/dist/xom-1.2.10.jar"/>
+                <pathelement path="${build}/dist/proxymusic-3.0.jar"/>
+                <pathelement path="${build}/dist/jaxb-core.jar"/>
             </classpath>
         </java>
     </target>
