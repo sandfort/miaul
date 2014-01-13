@@ -26,7 +26,6 @@
              </manifest>
         </jar>
         <copy file="${lib}/proxymusic-3.0.jar" todir="${build}/dist"/>
-        <copy file="${lib}/jaxb-core.jar" todir="${build}/dist"/>
     </target>
 
     <target name="run" depends="dist">
@@ -34,7 +33,6 @@
             <classpath>
                 <pathelement path="${build}/dist/Miaul-${DSTAMP}.jar"/>
                 <pathelement path="${build}/dist/proxymusic-3.0.jar"/>
-                <pathelement path="${build}/dist/jaxb-core.jar"/>
             </classpath>
         </java>
     </target>
