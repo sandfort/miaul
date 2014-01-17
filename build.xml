@@ -19,22 +19,19 @@
 
     <target name="dist" depends="compile">
         <mkdir dir="${build}/dist"/>
+        <mkdir dir="${build}/dist/lib"/>
         <jar jarfile="${build}/dist/Miaul-${DSTAMP}.jar"
              basedir="${build}/classes">
              <manifest>
+                 <attribute name="Class-Path" value="lib/proxymusic-3.0.jar"/>
                  <attribute name="Main-Class" value="us.jsand.miaul.Miaul"/>
              </manifest>
         </jar>
-        <copy file="${lib}/proxymusic-3.0.jar" todir="${build}/dist"/>
+        <copy file="${lib}/proxymusic-3.0.jar" todir="${build}/dist/lib"/>
     </target>
 
     <target name="run" depends="dist">
-        <java classname="us.jsand.miaul.Miaul">
-            <classpath>
-                <pathelement path="${build}/dist/Miaul-${DSTAMP}.jar"/>
-                <pathelement path="${build}/dist/proxymusic-3.0.jar"/>
-            </classpath>
-        </java>
+        <java fork="true" jar="${build}/dist/Miaul-${DSTAMP}.jar"/>
     </target>
 
     <target name="clean">

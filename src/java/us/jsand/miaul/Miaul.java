@@ -22,6 +22,7 @@ public class Miaul {
 
         // Establish a list of parts.
         PartList parts = factory.createPartList();
+        score.setPartList(parts);
         ScorePart scorePart = factory.createScorePart();
         scorePart.setId("P1");
         PartName name = factory.createPartName();
@@ -31,14 +32,18 @@ public class Miaul {
 
         // Now create the part that lives in the score.
         Part part = factory.createScorePartwisePart();
-        part.setId("P1");
+        // connect toe part to the score by reference, not by ID!
+        part.setId(scorePart);
+        score.getPart().add(part);
 
         // Create the measure that lives in the part.
         Measure measure = factory.createScorePartwisePartMeasure();
+        part.getMeasure().add(measure);
         measure.setNumber("1");
 
         // Set up the attributes of the measure.
         Attributes attr = factory.createAttributes();
+        measure.getNoteOrBackupOrForward().add(attr);
         attr.setDivisions(new BigDecimal(1));
 
         Key keyOfC = factory.createKey();
@@ -53,6 +58,7 @@ public class Miaul {
         attr.getTime().add(commonTime);
 
         Clef gClef = new Clef();
+        attr.getClef().add(gClef);
         gClef.setSign(ClefSign.G);
         gClef.setLine(new BigInteger("2"));
 
