@@ -1,4 +1,6 @@
-package us.jsand.maul;
+package us.jsand.miaul;
+
+import java.io.InputStream;
 
 import com.audiveris.proxymusic.*;
 import com.audiveris.proxymusic.util.*;
@@ -14,6 +16,9 @@ public class AbcReader extends MiaulReader {
     @Override
     public ScorePartwise read(InputStream in) {
         // ...okay, read
+
+        // TODO
+        return null;
     }
 }
 

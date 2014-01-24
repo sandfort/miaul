@@ -2,6 +2,7 @@
     <property name="src" location="src/java"/>
     <property name="build" location="build"/>
     <property name="lib" location="lib"/>
+    <property name="doc" location="doc"/>
 
     <target name="init">
         <tstamp/>
@@ -34,7 +35,14 @@
         <java fork="true" jar="${build}/dist/Miaul-${DSTAMP}.jar"/>
     </target>
 
+    <target name="doc">
+        <mkdir dir="${doc}"/>
+        <javadoc sourcepath="${src}"
+                 destdir="${doc}"/>
+    </target>
+
     <target name="clean">
         <delete dir="${build}"/>
+        <delete dir="${doc}"/>
     </target>
 </project>

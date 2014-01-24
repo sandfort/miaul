@@ -1,4 +1,6 @@
-package us.jsand.maiul;
+package us.jsand.miaul;
+
+import java.io.InputStream;
 
 import com.audiveris.proxymusic.*;
 import com.audiveris.proxymusic.util.*;
@@ -13,6 +15,6 @@ abstract class MiaulReader {
      * @param in An <code>InputStream</code>, to be read char-by-char.
      * @return A MusicXML translation of the input.
      */
-    abstract public ScorePartwise read(InputStream in) {};
+    abstract public ScorePartwise read(InputStream in);
 }
 
