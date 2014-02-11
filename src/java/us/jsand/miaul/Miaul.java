@@ -32,7 +32,7 @@ public class Miaul {
 
         // Now create the part that lives in the score.
         Part part = factory.createScorePartwisePart();
-        // connect toe part to the score by reference, not by ID!
+        // connect the part to the score by reference, not by ID!
         part.setId(scorePart);
         score.getPart().add(part);
 
