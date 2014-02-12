@@ -14,9 +14,9 @@
         <mkdir dir="${build}/classes"/>
         <javac srcdir="${src}" destdir="${build}/classes">
             <classpath>
-                <pathelement path="${prd.lib}/proxymusic-3.0.jar"/>
-                <pathelement path="${dev.lib}/junit-4.11.jar"/>
-                <pathelement path="${dev.lib}/hamcrest-core-1.3.jar"/>
+                <pathelement path="${prd.lib}/proxymusic.jar"/>
+                <pathelement path="${dev.lib}/junit.jar"/>
+                <pathelement path="${dev.lib}/hamcrest-core.jar"/>
             </classpath>
         </javac>
     </target>
@@ -27,11 +27,11 @@
         <jar jarfile="${build}/dist/Miaul-${DSTAMP}.jar"
              basedir="${build}/classes">
              <manifest>
-                 <attribute name="Class-Path" value="lib/proxymusic-3.0.jar"/>
+                 <attribute name="Class-Path" value="lib/proxymusic.jar"/>
                  <attribute name="Main-Class" value="us.jsand.miaul.Miaul"/>
              </manifest>
         </jar>
-        <copy file="${prd.lib}/proxymusic-3.0.jar" todir="${build}/dist/lib"/>
+        <copy file="${prd.lib}/proxymusic.jar" todir="${build}/dist/lib"/>
     </target>
 
     <target name="run" depends="dist">
