@@ -14,7 +14,9 @@ abstract class MiaulReader {
      * document.
      * @param in An <code>InputStream</code>, to be read char-by-char.
      * @return A MusicXML translation of the input.
+     * @throws MiaulReaderException if something goes wrong with the read.
      */
-    abstract public ScorePartwise read(InputStream in);
+    abstract public ScorePartwise read(InputStream in) 
+        throws MiaulReaderException;
 }
 

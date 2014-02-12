@@ -10,16 +10,20 @@ import org.xml.sax.SAXException;
 import com.audiveris.proxymusic.ScorePartwise;
 import com.audiveris.proxymusic.util.Marshalling;
 
-class MusicXMLReader {
-    public ScorePartwise read(InputStream in) {
+class MusicXMLReader extends MiaulReader {
+    public ScorePartwise read(InputStream in) throws MiaulReaderException{
         try {
             return Marshalling.unmarshal(in);
         } catch (JAXBException jaxbe) {
-            return null;
+            throw new MiaulReaderException("The XML unmarshalling failed.", 
+                    jaxbe);
         } catch (SAXException saxe) {
-            return null;
+            throw new MiaulReaderException("The XML parsing failed.", saxe);
         } catch (ParserConfigurationException pce) {
-            return null;
+            throw new MiaulReaderException("There was a configuration problem.",
+                    pce);
+        } finally {
+            in.close();
         }
     }
 }
