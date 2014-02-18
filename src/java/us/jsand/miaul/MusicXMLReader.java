@@ -22,8 +22,6 @@ class MusicXMLReader extends MiaulReader {
         } catch (ParserConfigurationException pce) {
             throw new MiaulReaderException("There was a configuration problem.",
                     pce);
-        } finally {
-            in.close();
         }
     }
 }

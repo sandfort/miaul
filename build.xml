@@ -1,6 +1,8 @@
 <project name="Miaul" default="dist">
     <property name="src" location="src/java"/>
     <property name="build" location="build"/>
+    <property name="classes" location="build/classes"/>
+    <property name="lib" location="lib"/>
     <property name="prd.lib" location="lib/production"/>
     <property name="dev.lib" location="lib/development"/>
     <property name="doc" location="doc"/>
@@ -8,11 +10,22 @@
     <target name="init">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${build}/classes"/>
     </target>
 
     <target name="compile" depends="init">
         <mkdir dir="${build}/classes"/>
         <javac srcdir="${src}" destdir="${build}/classes">
+            <classpath>
+                <pathelement path="${prd.lib}/proxymusic.jar"/>
+                <pathelement path="${dev.lib}/junit.jar"/>
+                <pathelement path="${dev.lib}/hamcrest-core.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile-tests" depends="compile">
+        <javac srcdir="src/test" destdir="${build}/classes">
             <classpath>
                 <pathelement path="${prd.lib}/proxymusic.jar"/>
                 <pathelement path="${dev.lib}/junit.jar"/>
@@ -42,6 +55,20 @@
         <mkdir dir="${doc}"/>
         <javadoc sourcepath="${src}"
                  destdir="${doc}"/>
+    </target>
+
+    <target name="test" depends="compile-tests">
+        <mkdir dir="${build}/junit"/>
+        <junit fork="yes" logfailedtests="yes">
+            <formatter type="xml" usefile="true"/>
+            <classpath>
+                <pathelement location="lib/production/"/>
+                <pathelement location="lib/development/junit.jar"/>
+                <pathelement location="lib/development/hamcrest-core.jar"/>
+                <pathelement location="${build}/classes"/>
+            </classpath>
+            <test name="TestMusicXMLReader" todir="build/junit"/>
+        </junit>
     </target>
 
     <target name="clean">

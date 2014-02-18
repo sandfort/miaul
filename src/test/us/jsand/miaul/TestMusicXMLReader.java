@@ -2,16 +2,33 @@ package us.jsand.miaul;
 
 import static org.junit.Assert.*;
 
+import java.io.*;
+import java.lang.String;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
+
+import com.audiveris.proxmusic;
+import com.audiveris.proxymusic.ScorePartwise;
+import com.audiveris.proxymusic.ScorePartwise.Part;
+import com.audiveris.proxymusic.ScorePartwise.Part.Measure;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
 
 public class TestMusicXMLReader {
 
-    @Befre
-    setUp() {
-        MusicXMLReader reader = new MusicXMLReader();
-        String res = this.getClass().getResource("/res").toString();
+    MusicXMLReader reader;
+    String res;
+    String in;
+
+    @Before
+    public void setUp() {
+        reader = new MusicXMLReader();
+        res = this.getClass().getResource("/res").toString();
+        in = res + File.separator + "helloworld.xml";
 
         ObjectFactory factory = new ObjectFactory();
 
@@ -57,7 +74,8 @@ public class TestMusicXMLReader {
     }
 
     @Test
-    testRead() {
+    public void testRead() {
+        MusicXMLReader reader = new MusicXMLReader();
         ScorePartwise result = reader.read(new FileInputStream(in));
     }
 }
