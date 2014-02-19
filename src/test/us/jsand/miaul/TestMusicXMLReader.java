@@ -102,8 +102,9 @@ public class TestMusicXMLReader {
     @Test
     public void testRead() {
         MusicXMLReader reader = new MusicXMLReader();
+        ScorePartwise result = null;
         try {
-            ScorePartwise result = reader.read(new FileInputStream(in));
+            result = reader.read(new FileInputStream(in));
         } catch (FileNotFoundException fnfe) {
             fail(fnfe.toString());
         } catch (MiaulReaderException mre) {
