@@ -26,6 +26,7 @@ public class TestMusicXMLReader {
     MusicXMLReader reader;
     String res;
     String in;
+    ScorePartwise score;
 
     @Before
     public void setUp() {
@@ -36,7 +37,7 @@ public class TestMusicXMLReader {
 
         // A score where measures are arranged in parts.
         // Use ScoreTimewise for a score where parts are arranged in measures.
-        ScorePartwise score = factory.createScorePartwise();
+        score = factory.createScorePartwise();
 
         // Establish a list of parts.
         PartList parts = factory.createPartList();
@@ -112,14 +113,14 @@ public class TestMusicXMLReader {
         }
         
         assertEquals("The key should match.",
-                score.getPart().get(0)
+                ((Attributes)score.getPart().get(0)
                      .getMeasure().get(0)
-                     .getNoteOrBackupOrForward().get(0)
+                     .getNoteOrBackupOrForward().get(0))
                      .getKey().get(0)
                      .getFifths(),
-                 result.getPart().get(0)
+                 ((Attributes)result.getPart().get(0)
                      .getMeasure().get(0)
-                     .getNoteOrBackupOrForward().get(0)
+                     .getNoteOrBackupOrForward().get(0))
                      .getKey().get(0)
                      .getFifths());
     }
