@@ -110,5 +110,17 @@ public class TestMusicXMLReader {
         } catch (MiaulReaderException mre) {
             fail(mre.toString());
         }
+        
+        assertEquals("The key should match.",
+                score.getPart().get(0)
+                     .getMeasure().get(0)
+                     .getNoteOrBackupOrForward().get(0)
+                     .getKey().get(0)
+                     .getFifths(),
+                 result.getPart().get(0)
+                     .getMeasure().get(0)
+                     .getNoteOrBackupOrForward().get(0)
+                     .getKey().get(0)
+                     .getFifths());
     }
 }
